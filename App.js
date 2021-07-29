@@ -28,13 +28,15 @@ export default function App() {
       name: key,
       data: covidData_raw[key]
     }));
+    
+    const windowSize = 7;
 
     const countriesWithAvg = countriesAsArray.map(country => ({
       name: country.name,
       data: [...movingAverage(country.data, windowSize)]
     }));
 
-    return countriesAsArray;
+    return countriesWithAvg;
   }, []); 
   
   console.log(covidData[0].data[0]);
