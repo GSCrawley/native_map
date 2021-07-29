@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, useMemo} from 'react';
 import { StyleSheet, Text, View, Dimensions } from 'react-native';
 
 
@@ -11,9 +11,26 @@ import Map from "./components/Map";
 //CONSTANTS
 import COLORS from "./constants/Colors";
 
+//DATA
+import covidData_raw from "./assets/data/who_data";
+
 export default function App() {
   const dimensions = Dimensions.get("window");
 
+  const [stat, setStat] = useState("confirmed");
+
+  //Data Manipulation
+  const covidData = useMemo(() => {
+    const countriesAsArray = Object.keys(covidData_raw).map((key) => ({
+      name: key,
+      data: covidData_raw[key]
+    }));
+
+    return countriesAsArray;
+  }, []);
+
+  console.log(covidData[0]);
+  
   return (
     <View style={styles.container}>
         <Map
