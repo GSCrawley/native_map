@@ -17,6 +17,10 @@ import movingAverage from "./functions/movingAverage"
 //DATA
 import covidData_raw from "./assets/data/who_data.json";
 
+//LIBRARIES
+
+import * as d3 from "d3";
+
 export default function App() {
   const dimensions = Dimensions.get("window");
 
@@ -28,7 +32,9 @@ export default function App() {
       name: key,
       data: covidData_raw[key]
     }));
-    
+
+  //Narrowing down the output to only countries with more than 10 confirmed deaths
+        
     const windowSize = 7;
 
     const countriesWithAvg = countriesAsArray.map(country => ({
@@ -36,11 +42,25 @@ export default function App() {
       data: [...movingAverage(country.data, windowSize)]
     }));
 
-    return countriesWithAvg;
+    const onlyCountriesWithData = countriesWithAvg.filter(country =>
+      country.data.findIndex((d, _) => d["avg_" +  stat] >= 10) != -1
+      );
+
+    return onlyCountriesWithData;
   }, []); 
   
-  console.log(covidData[0].data[0]);
-  
+  const maxY = useMemo(() => {
+    return d3.max(covidData, (countryArray) =>
+    d3.max(country.data, (d) => d["avg_" + stat])
+    )
+  }, [stat])
+
+  const colorize = useMemo(() => {
+    const colorScale = d3.scaleSequentialSymlog(d3.interpolateOranges) //Symlog allows for '0' 
+    .domain([0,maxY]);
+
+    return colorScale;
+  })   
   
   return (
     <View style={styles.container}>

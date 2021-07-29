@@ -14,7 +14,7 @@ export default (data, windowSize) => {
 
         newData.push({
             ...data[i],
-            averages
+            ...averages
         });
     };
 

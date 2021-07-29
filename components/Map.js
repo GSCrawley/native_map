@@ -17,7 +17,7 @@ const Map = props => {
     } = props;
 
     // Create Map Paths
-    // useMemo hook creates a constant that will only change with changing dependencies. in this case I am making sure the dimensions of the map will always fill half the screen
+    // useMemo hook creates a constant that will only change with changing dependencies. in this case I am making sure the dimensions of the map will always fill half the screen. it will matter once the
     
     const mapExtent = useMemo(() => {
         return dimensions.width > dimensions.height /2 ? dimensions.height / 2 : dimensions.width;
@@ -39,44 +39,44 @@ const Map = props => {
         return windowPaths;
     }, [dimensions]); 
 
-    useEffect(() => {
-        setCountryList(
-            countryPaths.map((path, i) => {
-                return (
-                    <Path 
-                        key={COUNTRIES[i].properties.name}
-                        d={path}
-                        stroke={COLORS.borders}
-                        strokeWidth={0.6}
-                        strokeOpacity={0.3}
-                        fill={COLORS.greyDark}
-                        opacity={0.4}
-                        />
-                )
-            })
-        )
-    })
-    
-    return (
-        <View>
-            <Svg
-                width={dimensions.width}
-                height={dimensions.height /2} 
-                // style={styles.svg}
-                >
-                    <G>
-                        <Circle
-                            cx={dimensions.width /2}
-                            cy={mapExtent /2}
-                            r={mapExtent /2}
-                            fill={COLORS.ocean} 
+        useEffect(() => {
+            setCountryList(
+                countryPaths.map((path, i) => {
+                    return (
+                        <Path 
+                            key={COUNTRIES[i].properties.name}
+                            d={path}
+                            stroke={COLORS.borders}
+                            strokeWidth={0.6}
+                            strokeOpacity={0.3}
+                            fill={COLORS.greyDark}
+                            opacity={0.4}
                             />
-                    {countryList.map(x => x)}
-                    </G>
-                </Svg>
-        </View>
-  );
-}
+                    )
+                })
+            )
+        })
+        
+        return (
+            <View>
+                <Svg
+                    width={dimensions.width}
+                    height={dimensions.height /2} 
+                    // style={styles.svg}
+                    >
+                        <G>
+                            <Circle
+                                cx={dimensions.width /2}
+                                cy={mapExtent /2}
+                                r={mapExtent /2.1}
+                                fill={COLORS.ocean} 
+                                />
+                        {countryList.map(x => x)}
+                        </G>
+                    </Svg>
+            </View>
+    );
+    }
 
 // const styles = StyleSheet.create({
 //     svg: {
