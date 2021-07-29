@@ -8,6 +8,9 @@ import { StyleSheet, Text, View, Dimensions } from 'react-native';
 
 import Map from "./components/Map";
 
+//CONSTANTS
+import COLORS from "./constants/Colors";
+
 export default function App() {
   const dimensions = Dimensions.get("window");
 
@@ -23,7 +26,7 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: COLORS.primary,
     alignItems: 'center',
     justifyContent: 'center',
   },

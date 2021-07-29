@@ -7,6 +7,7 @@ import * as d3 from "d3";
 
 //CONSTANTS
 import { COUNTRIES } from "../constants/countryShapes";
+import COLORS from "../constants/Colors";
 
 const Map = props => {
     
@@ -23,10 +24,12 @@ const Map = props => {
     }, [dimensions]);
     
     const countryPaths = useMemo(() => {
+        const clipAngle = 155;
         const projection = d3.geoAzimuthalEqualArea()
             .center([180,-180])
             .rotate([0,-90])
             .fitSize([mapExtent,mapExtent], {type: "FeatureCollection", features: COUNTRIES})
+            .clipAngle(clipAngle)
             .translate([dimensions.width / 2, mapExtent / 2]);
 
         const geoPath = d3.geoPath().projection(projection);
@@ -43,9 +46,10 @@ const Map = props => {
                     <Path 
                         key={COUNTRIES[i].properties.name}
                         d={path}
-                        stroke="blue"
-                        strokeWidth={1}
-                        fill="#aaa"
+                        stroke={COLORS.greyLight}
+                        strokeWidth={0.6}
+                        fill={COLORS.greyLight}
+                        opacity={0.4}
                         />
                 )
             })
@@ -56,8 +60,15 @@ const Map = props => {
         <View style={styles.container}>
             <Svg
                 width={dimensions.width}
-                height={dimensions.height /2}>
+                height={dimensions.height /2} 
+                style={styles.svg}>
                     <G>
+                        <Circle
+                            cx={dimensions.width /2}
+                            cy={mapExtent /2}
+                            r={mapExtent /2}
+                            fill={COLORS.lightPrimary} 
+                            />
                     {countryList.map(x => x)}
                     </G>
                 </Svg>
@@ -66,6 +77,8 @@ const Map = props => {
 }
 
 const styles = StyleSheet.create({
+    svg: {
+    }
   
 });
 
