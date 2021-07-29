@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "d3": "^7.0.0",
+    "d3-array": "^3.0.1",
     "expo": "~42.0.1",
     "expo-status-bar": "~1.0.4",
     "node": "^16.5.0",
@@ -16,7 +17,8 @@
     "react-dom": "16.13.1",
     "react-native": "https://github.com/expo/react-native/archive/sdk-42.0.0.tar.gz",
     "react-native-svg": "12.1.1",
-    "react-native-web": "~0.13.12"
+    "react-native-web": "~0.13.12",
+    "topojson-client": "^3.1.0"
   },
   "devDependencies": {
     "@babel/core": "^7.9.0"
