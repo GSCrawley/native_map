@@ -11,8 +11,11 @@ import Map from "./components/Map";
 //CONSTANTS
 import COLORS from "./constants/Colors";
 
+//FUNCTIONS
+import movingAverage from "./functions/movingAverage"
+
 //DATA
-import covidData_raw from "./assets/data/who_data";
+import covidData_raw from "./assets/data/who_data.json";
 
 export default function App() {
   const dimensions = Dimensions.get("window");
@@ -26,10 +29,16 @@ export default function App() {
       data: covidData_raw[key]
     }));
 
-    return countriesAsArray;
-  }, []);
+    const countriesWithAvg = countriesAsArray.map(country => ({
+      name: country.name,
+      data: [...movingAverage(country.data, windowSize)]
+    }));
 
-  console.log(covidData[0]);
+    return countriesAsArray;
+  }, []); 
+  
+  console.log(covidData[0].data[0]);
+  
   
   return (
     <View style={styles.container}>
