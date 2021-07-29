@@ -1,5 +1,5 @@
 import React, { useMemo, useState, useEffect } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 
 // LIBRARIES
 import Svg, { G, Path, Circle } from 'react-native-svg';
@@ -46,9 +46,10 @@ const Map = props => {
                     <Path 
                         key={COUNTRIES[i].properties.name}
                         d={path}
-                        stroke={COLORS.greyLight}
+                        stroke={COLORS.borders}
                         strokeWidth={0.6}
-                        fill={COLORS.greyLight}
+                        strokeOpacity={0.3}
+                        fill={COLORS.greyDark}
                         opacity={0.4}
                         />
                 )
@@ -57,17 +58,18 @@ const Map = props => {
     })
     
     return (
-        <View style={styles.container}>
+        <View>
             <Svg
                 width={dimensions.width}
                 height={dimensions.height /2} 
-                style={styles.svg}>
+                // style={styles.svg}
+                >
                     <G>
                         <Circle
                             cx={dimensions.width /2}
                             cy={mapExtent /2}
                             r={mapExtent /2}
-                            fill={COLORS.lightPrimary} 
+                            fill={COLORS.ocean} 
                             />
                     {countryList.map(x => x)}
                     </G>
@@ -76,10 +78,10 @@ const Map = props => {
   );
 }
 
-const styles = StyleSheet.create({
-    svg: {
-    }
+// const styles = StyleSheet.create({
+//     svg: {
+//     }
   
-});
+// });
 
 export default Map;
