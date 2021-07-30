@@ -2,7 +2,7 @@ export default (data, windowSize) => {
     newData=[];
 
     for (var i = windowSize -1; i < data.length; i++) {
-        const averages = {}
+        const averages = {};
         for (stat of ["confirmed_cum", "confirmed"]) {
             const curWindowData = data.slice(i - windowSize + 1, i + 1); 
             
@@ -18,5 +18,5 @@ export default (data, windowSize) => {
         });
     };
 
-    return newData
+    return newData;
 }
