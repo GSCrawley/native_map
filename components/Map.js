@@ -56,8 +56,8 @@ const Map = props => {
     };
 
     const panGestureHandler = event => {
-        setTranslateX(-event.nativeEvent.translationX / scale + lastTranslateX);
-        setTranslateY(-event.nativeEvent.translationY / scale + lastTranslateY);
+        setTranslateX(event.nativeEvent.translationX / scale + lastTranslateX);
+        setTranslateY(event.nativeEvent.translationY / scale + lastTranslateY);
 
     };
 
@@ -95,7 +95,19 @@ const Map = props => {
         }
     };
 
-
+    //Initialize Map
+    const initializeMap = () => {
+        setTranslateX(0);
+        setTranslateY(0);
+        setScale(1);
+        setPrevScale(1);
+        setLastScaleOffset(0);
+        Animated.timing(buttonOpacity, {
+            toValue: 0,
+            duration: 1000,
+            useNativeDriver: true
+        }).start();
+    };
 
     // Create Map Paths
     // useMemo hook creates a constant that will only change with changing dependencies. in this case I am making sure the dimensions of the map will always fill half the screen. it will matter once the
@@ -188,12 +200,13 @@ const Map = props => {
                     </Svg>
                     </PinchGestureHandler>
                 </PanGestureHandler>
+
                 <Button
                     buttonStyle={{
                         opacity: buttonOpacity
                     }}
                     onPress={initializeMap}
-                    text={<>&#x21bb;</>}
+                    text={<>&#x21bb;</>} //React code for reload button
                     />
             </View>
     );

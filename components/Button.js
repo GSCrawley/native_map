@@ -1,14 +1,14 @@
 import React from 'react';
-import {View, StyleSheet, TouchableOpacity} from "react-native";
+import {View, Text, StyleSheet, TouchableOpacity, Animated} from "react-native";
 import COLORS from "../constants/Colors";
 
 const Button = props => {
     return (
-        <View>
+        <Animated.View style={props.buttonStyle}>
             <TouchableOpacity onPress={props.onPress}>
                 <Text style ={styles.text}>{props.text}</Text>
             </TouchableOpacity>
-        </View>
+        </Animated.View>
     );
 };
 
