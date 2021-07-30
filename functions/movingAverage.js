@@ -3,7 +3,7 @@ export default (data, windowSize) => {
 
     for (var i = windowSize -1; i < data.length; i++) {
         const averages = {}
-        for (stat of ["confirmed", "deaths"]) {
+        for (stat of ["confirmed_cum", "confirmed"]) {
             const curWindowData = data.slice(i - windowSize + 1, i + 1); 
             
             const average = curWindowData.reduce((acc, cur) => cur[stat] + acc, 0) / windowSize;

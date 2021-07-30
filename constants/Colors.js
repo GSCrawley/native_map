@@ -5,7 +5,7 @@ export default {
     borders: "#F7AA66",
     secondary: "#3bafdb",
     font: "#e3eaef",
-    greyDark: "#000",
+    greyDark: "#666",
     greyLight: "#aaa",
     red: "#e94b4e",
     greys: ["111", "#666", "#888","aaa","#ccc"],

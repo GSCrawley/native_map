@@ -4,10 +4,9 @@
 
 # covid data from covid19.who.it
 
-### currently getting the following Warning: Maximum update depth exceeded. This can happen when a component calls setState inside useEffect, but useEffect either doesn't have a dependency array, or one of the dependencies changes on every render.
+### currently getting the following Warning: Maximum update depth exceeded. This can happen when a component calls setState inside useEffect, but useEffect either doesn't have a dependency array, or one of the dependencies changes on every render. -- fixed by putting an empty array at the end of useEffect()!!!
 
 ### PayloadTooLargeError: request entity too large
 
-### Warning: Each child in a list should have a unique "key" prop.
 
 

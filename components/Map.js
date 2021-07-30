@@ -17,7 +17,8 @@ const Map = props => {
         dimensions,
         data,
         date,
-        colorize
+        colorize,
+        stat
     } = props;
 
     // Create Map Paths
@@ -46,20 +47,41 @@ const Map = props => {
         useEffect(() => {
             setCountryList(
                 countryPaths.map((path, i) => {
+                    const curCountry = COUNTRIES[i].properties.name;
+
+                    const isCountryNameInData = data.some(country => country.name === curCountry);
+
+                    const curCountryData = isCountryNameInData 
+                        ? data.find(country => country.name === curCountry)["data"]
+                        : null;
+                    
+                    const isDataAvailable = isCountryNameInData
+                        ? curCountryData.some(data => data.date === date)
+                        : false;
+                    
+                    const dateIndex = isDataAvailable
+                        ? curCountryData.findIndex(x => x.date === date)
+                        : null;
+
+
                     return (
                         <Path 
-                            key={COUNTRIES[i].properties.country}
+                            key={COUNTRIES[i].properties.name}
                             d={path}
-                            stroke={COLORS.borders}
+                            stroke={COLORS.greyLight}
                             strokeWidth={0.6}
                             strokeOpacity={0.3}
-                            fill={COLORS.greyDark}
-                            opacity={0.4}
+                            fill={
+                                isDataAvailable 
+                                    ? colorize(curCountryData[dateIndex][stat]) 
+                                    : COLORS.greyLight
+                            }
+                            opacity={isDataAvailable ? 1 : 0.4}
                             />
                     )
                 })
             )
-        })
+        }, []);
         
         return (
             <View>
@@ -73,9 +95,9 @@ const Map = props => {
                                 cx={dimensions.width /2}
                                 cy={mapExtent /2}
                                 r={mapExtent /2.1}
-                                fill={COLORS.ocean} 
-                                />
-                        {countryList.map(x => x)}
+                                fill={COLORS.lightPrimary} 
+                            />
+                            {countryList.map(x => x)}
                         </G>
                     </Svg>
             </View>

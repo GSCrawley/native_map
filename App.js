@@ -24,8 +24,8 @@ import * as d3 from "d3";
 export default function App() {
   const dimensions = Dimensions.get("window");
 
-  const [stat, setStat] = useState("confirmed_cum");
-  const  [date, setDate] = useState("2021-01-29");
+  const [stat, setStat] = useState("avg_confirmed");
+  const  [date, setDate] = useState("2020-08-15");
 
   //Data Manipulation
   const covidData = useMemo(() => {
@@ -44,7 +44,7 @@ export default function App() {
     }));
 
     const onlyCountriesWithData = countriesWithAvg.filter(country =>
-      country.data.findIndex((d, _) => d["avg_" +  stat] >= 10) != -1
+      country.data.findIndex((d, _) => d[stat] >= 10) != -1
       );
 
     return onlyCountriesWithData;
@@ -52,15 +52,15 @@ export default function App() {
   
   const maxY = useMemo(() => {
     return d3.max(covidData, (country) =>
-    d3.max(country.data, (d) => d["avg_" + stat])
+    d3.max(country.data, (d) => d[stat])
     );
   }, [stat])
 
   const colorize = useMemo(() => {
-    const colorScale = d3.scaleSequentialSymlog(d3.interpolateOranges) //Symlog allows for '0' 
+    const colorScale = d3.scaleSequentialSymlog(d3.interpolateReds) //Symlog allows for '0' 
     .domain([0,maxY]);
-
-    return colorScale;
+    // return colorScale
+    return colorize;
   })   
   
   return (
@@ -70,6 +70,7 @@ export default function App() {
           data={covidData}
           date={date}
           colorize={colorize}
+          stat={stat}
         />       
     </View>
   );
