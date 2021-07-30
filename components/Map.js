@@ -15,7 +15,7 @@ const Map = props => {
 
     const {
         dimensions,
-        data,
+        covidData,
         date,
         colorize,
         stat
@@ -49,14 +49,14 @@ const Map = props => {
                 countryPaths.map((path, i) => {
                     const curCountry = COUNTRIES[i].properties.name;
 
-                    const isCountryNameInData = data.some(country => country.name === curCountry);
+                    const isCountryNameInData = covidData.some(country => country.name === curCountry);
 
                     const curCountryData = isCountryNameInData 
-                        ? data.find(country => country.name === curCountry)["data"]
+                        ? covidData.find(country => country.name === curCountry)["data"]
                         : null;
                     
                     const isDataAvailable = isCountryNameInData
-                        ? curCountryData.some(data => data.date === date)
+                        ? curCountryData.some(covidData => covidData.date === date)
                         : false;
                     
                     const dateIndex = isDataAvailable

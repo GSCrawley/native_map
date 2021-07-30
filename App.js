@@ -12,7 +12,7 @@ import Map from "./components/Map";
 import COLORS from "./constants/Colors";
 
 //FUNCTIONS
-import movingAverage from "./functions/movingAverage"
+import movingAverage from "./functions/movingAverage";
 
 //DATA
 import covidData_raw from "./assets/data/who_data.json";
@@ -25,7 +25,7 @@ export default function App() {
   const dimensions = Dimensions.get("window");
 
   const [stat, setStat] = useState("avg_confirmed");
-  const  [date, setDate] = useState("2020-08-15");
+  const  [date, setDate] = useState("2020-10-15");
 
   //Data Manipulation
   const covidData = useMemo(() => {
@@ -59,15 +59,14 @@ export default function App() {
   const colorize = useMemo(() => {
     const colorScale = d3.scaleSequentialSymlog(d3.interpolateReds) //Symlog allows for '0' 
     .domain([0,maxY]);
-    // return colorScale
-    return colorize;
+    return colorScale
   })   
   
   return (
     <View style={styles.container}>
         <Map
           dimensions={dimensions} 
-          data={covidData}
+          covidData={covidData}
           date={date}
           colorize={colorize}
           stat={stat}
