@@ -1,5 +1,5 @@
 import React, { useMemo, useState, useEffect } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { Animated, StyleSheet, View } from 'react-native';
 
 // LIBRARIES
 import Svg, { G, Path, Circle } from 'react-native-svg';
@@ -14,12 +14,20 @@ import {
 import { COUNTRIES } from "../constants/countryShapes";
 import COLORS from "../constants/Colors";
 
+// COMPONENTS
+import Button from './Button';
+
 const Map = props => {
     
     const [countryList, setCountryList] = useState([]);
-    const [translateX, setTranslateX] = useState([0]);
-    const [translateY, setTranslateY] = useState([0]);
-
+    const [translateX, setTranslateX] = useState(0);
+    const [translateY, setTranslateY] = useState(0);
+    const [lastTranslateX, setLastTranslateX] = useState(0);
+    const [lastTranslateY, setLastTranslateY] = useState(0);
+    const [buttonOpacity, _] = useState(new Animated.Value(0));
+    const [scale, setScale] = useState(1);
+    const [prevScale, setPrevScale] = useState(1);
+    const [lastScaleOffset, setLastScaleOffset] = useState(0);
 
     const {
         dimensions,
@@ -31,11 +39,63 @@ const Map = props => {
 
 
     //Gesture Handlers
-    const PanGestureHandler = event => {
-        setTranslateX(event.nativeEvent.translationX);
-        setTranslateY(event.nativeEvent.translationY);
+
+    const panStateHandler = event => {
+        if (event.nativeEvent.oldState === State.UNDETERMINED) {
+            setLastTranslateX(translateX);
+            setLastTranslateY(translateY);
+        };
+
+        if (event.nativeEvent.oldState === State.ACTIVE) {
+            Animated.timing(buttonOpacity, {
+                toValue: 1,
+                duration: 1000,
+                useNativeDriver: true
+            }).start();
+        };
+    };
+
+    const panGestureHandler = event => {
+        setTranslateX(-event.nativeEvent.translationX / scale + lastTranslateX);
+        setTranslateY(-event.nativeEvent.translationY / scale + lastTranslateY);
 
     };
+
+    const pinchStateHandler = event => {
+        if (event.nativeEvent.oldState === State.UNDETERMINED) {
+            setLastScaleOffset(-1 + scale);
+        };
+
+        if (event.nativeEvent.oldState === State.ACTIVE ) {
+            Animated.timing(buttonOpacity, {
+                toValue: 1,
+                duration: 1000,
+                useNativeDriver: true
+            }).start();
+        };
+    };
+
+    const pinchGestureHandler = event => {
+        if (event.nativeEvent.scale + lastScaleOffset >= 1 && 
+            event.nativeEvent.scale + lastScaleOffset <= 5) {
+            setPrevScale(scale);
+            setScale(event.nativeEvent.scale + lastScaleOffset);
+            setTranslateX(
+                translateX - (
+                    event.nativeEvent.focalX / scale -
+                    event.nativeEvent.focalX / prevScale
+                )
+            );
+            setTranslateY(
+                translateY - (
+                    event.nativeEvent.focalY / scale - 
+                    event.nativeEvent.focalY / prevScale
+                )
+            );
+        }
+    };
+
+
 
     // Create Map Paths
     // useMemo hook creates a constant that will only change with changing dependencies. in this case I am making sure the dimensions of the map will always fill half the screen. it will matter once the
@@ -44,7 +104,7 @@ const Map = props => {
         return dimensions.width > dimensions.height /2 ? dimensions.height / 2 : dimensions.width;
     }, [dimensions]);
     
-    const countryPaths = useMemo(() => {
+    const  countryPaths = useMemo(() => {
         const clipAngle = 155;
         const projection = d3.geoAzimuthalEqualArea()
             .center([180,-180])
@@ -103,7 +163,9 @@ const Map = props => {
             <View>
                 <PanGestureHandler
                     onGestureEvent={(e) => panGestureHandler(e)}
+                    onHandlerStateChange={(e) => panStateHandler(e)}
                     >
+
                     <Svg
                     width={dimensions.width}
                     height={dimensions.height /2} 
