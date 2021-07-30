@@ -4,11 +4,11 @@ import { Animated, StyleSheet, View } from 'react-native';
 // LIBRARIES
 import Svg, { G, Path, Circle } from 'react-native-svg';
 import * as d3 from "d3";
-import {
+import {  
     PanGestureHandler, 
     PinchGestureHandler,
-    State
-} from 'react-native-gesture-handler'
+    State }
+ from 'react-native-gesture-handler';
 
 //CONSTANTS
 import { COUNTRIES } from "../constants/countryShapes";
@@ -31,7 +31,7 @@ const Map = props => {
 
     const {
         dimensions,
-        covidData,
+        data,
         date,
         colorize,
         stat
@@ -56,16 +56,15 @@ const Map = props => {
     };
 
     const panGestureHandler = event => {
-        setTranslateX(event.nativeEvent.translationX / scale + lastTranslateX);
-        setTranslateY(event.nativeEvent.translationY / scale + lastTranslateY);
-
+        setTranslateX(-event.nativeEvent.translationX / scale + lastTranslateX);
+        setTranslateY(-event.nativeEvent.translationY / scale + lastTranslateY);
     };
 
     const pinchStateHandler = event => {
         if (event.nativeEvent.oldState === State.UNDETERMINED) {
             setLastScaleOffset(-1 + scale);
         };
-
+    
         if (event.nativeEvent.oldState === State.ACTIVE ) {
             Animated.timing(buttonOpacity, {
                 toValue: 1,
@@ -79,7 +78,8 @@ const Map = props => {
         if (event.nativeEvent.scale + lastScaleOffset >= 1 && 
             event.nativeEvent.scale + lastScaleOffset <= 5) {
             setPrevScale(scale);
-            setScale(event.nativeEvent.scale + lastScaleOffset);
+            setScale(event.nativeEvent.scale 
+            + lastScaleOffset);
             setTranslateX(
                 translateX - (
                     event.nativeEvent.focalX / scale -
@@ -87,12 +87,13 @@ const Map = props => {
                 )
             );
             setTranslateY(
-                translateY - (
+               translateY - (
                     event.nativeEvent.focalY / scale - 
                     event.nativeEvent.focalY / prevScale
                 )
             );
         }
+
     };
 
     //Initialize Map
@@ -116,12 +117,12 @@ const Map = props => {
         return dimensions.width > dimensions.height /2 ? dimensions.height / 2 : dimensions.width;
     }, [dimensions]);
     
-    const  countryPaths = useMemo(() => {
-        const clipAngle = 155;
+    const countryPaths = useMemo(() => {
+        const clipAngle = 150;
+
         const projection = d3.geoAzimuthalEqualArea()
-            .center([180,-180])
             .rotate([0,-90])
-            .fitSize([mapExtent,mapExtent], {type: "FeatureCollection", features: COUNTRIES})
+            .fitSize([mapExtent,mapExtent], { type: "FeatureCollection", features: COUNTRIES })
             .clipAngle(clipAngle)
             .translate([dimensions.width / 2, mapExtent / 2]);
 
@@ -132,29 +133,28 @@ const Map = props => {
         return windowPaths;
     }, [dimensions]); 
 
-        useEffect(() => {
-            setCountryList(
-                countryPaths.map((path, i) => {
-                    const curCountry = COUNTRIES[i].properties.name;
+    useEffect(() => {
+        setCountryList(
+            countryPaths.map((path, i) => {
+                const curCountry = COUNTRIES[i].properties.name;
 
-                    const isCountryNameInData = covidData.some(country => country.name === curCountry);
+                const isCountryNameInData = data.some(country => country.name === curCountry);
 
-                    const curCountryData = isCountryNameInData 
-                        ? covidData.find(country => country.name === curCountry)["data"]
-                        : null;
+                const curCountryData = isCountryNameInData 
+                    ? data.find(country => country.name === curCountry)["data"]
+                    : null;
                     
-                    const isDataAvailable = isCountryNameInData
-                        ? curCountryData.some(covidData => covidData.date === date)
-                        : false;
+                const isDataAvailable = isCountryNameInData
+                    ? curCountryData.some(data => data.date === date)
+                    : false;
                     
-                    const dateIndex = isDataAvailable
-                        ? curCountryData.findIndex(x => x.date === date)
+                const dateIndex = isDataAvailable
+                    ? curCountryData.findIndex(x => x.date === date)
                         : null;
-
-
-                    return (
-                        <Path 
-                            key={COUNTRIES[i].properties.name}
+                
+                return (
+                    <Path 
+                        key={COUNTRIES[i].properties.name}
                             d={path}
                             stroke={COLORS.greyLight}
                             strokeWidth={0.6}
@@ -166,38 +166,36 @@ const Map = props => {
                             }
                             opacity={isDataAvailable ? 1 : 0.4}
                             />
-                    )
-                })
-            )
-        }, []);
+                        )
+                    })
+                )
+        }, [])
         
         return (
             <View>
                 <PanGestureHandler
                     onGestureEvent={(e) => panGestureHandler(e)}
                     onHandlerStateChange={(e) => panStateHandler(e)}
+                >
+                    <PinchGestureHandler
+                        onGestureEvent={(e) => pinchGestureHandler(e)}
+                        onHandlerStateChange={(e) => pinchStateHandler(e)}
                     >
-                        <PinchGestureHandler
-                            onGestureEvent={(e) => pinchGestureHandler(e)}
-                            onHandlerStateChange={(e) => pinchStateHandler(e)}
+                        <Svg
+                            width={dimensions.width}
+                            height={dimensions.height /2} >
+                            <G
+                                transform={`scale(${scale}) translate(${-translateX},${-translateY})`}
                             >
-                    <Svg
-                    width={dimensions.width}
-                    height={dimensions.height /2} 
-                    // style={styles.svg}
-                    >
-                        <G
-                            transform={`translate(${translateX},${translateY})`}
-                            >
-                            <Circle
-                                cx={dimensions.width /2}
-                                cy={mapExtent /2}
-                                r={mapExtent /2.1}
-                                fill={COLORS.lightPrimary} 
-                            />
-                            {countryList.map(x => x)}
-                        </G>
-                    </Svg>
+                                <Circle
+                                    cx={dimensions.width /2}
+                                    cy={mapExtent /2}
+                                    r={mapExtent /2.1}
+                                    fill={COLORS.lightPrimary} 
+                                />
+                                {countryList.map(x => x)}
+                            </G>
+                        </Svg>
                     </PinchGestureHandler>
                 </PanGestureHandler>
 
@@ -207,15 +205,10 @@ const Map = props => {
                     }}
                     onPress={initializeMap}
                     text={<>&#x21bb;</>} //React code for reload button
-                    />
+                />
             </View>
-    );
- }
+        );
+    }
 
-// const styles = StyleSheet.create({
-//     svg: {
-//     }
-  
-// });
+export default Map
 
-export default Map;

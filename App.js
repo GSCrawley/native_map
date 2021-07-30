@@ -1,5 +1,5 @@
 import React, {useState, useMemo} from 'react';
-import { StyleSheet, Text, View, Dimensions } from 'react-native';
+import { StyleSheet, View, Dimensions } from 'react-native';
 
 
 // COMPONENTS
@@ -59,14 +59,15 @@ export default function App() {
   const colorize = useMemo(() => {
     const colorScale = d3.scaleSequentialSymlog(d3.interpolateOranges) //Symlog allows for '0' 
     .domain([0,maxY]);
-    return colorScale
+
+    return colorScale;
   })   
   
   return (
     <View style={styles.container}>
         <Map
           dimensions={dimensions} 
-          covidData={covidData}
+          data={covidData}
           date={date}
           colorize={colorize}
           stat={stat}

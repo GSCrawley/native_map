@@ -21,7 +21,7 @@
     "patch-package": "^6.4.7",
     "react": "^17.0.2",
     "react-dom": "16.13.1",
-    "react-native": "^0.64.2",
+    "react-native": "0.64",
     "react-native-gesture-handler": "^1.10.3",
     "react-native-svg": "^12.1.1",
     "react-native-web": "^0.17.1",

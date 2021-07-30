@@ -8,5 +8,5 @@ export default {
     greyDark: "#666",
     greyLight: "#aaa",
     red: "#e94b4e",
-    greys: ["111", "#666", "#888","aaa","#ccc"],
+    greys: ["#111", "#666", "#888","#aaa","#ccc"],
 }
