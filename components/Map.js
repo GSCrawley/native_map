@@ -12,8 +12,12 @@ import COLORS from "../constants/Colors";
 const Map = props => {
     
     const [countryList, setCountryList] = useState([]);
+
     const {
-        dimensions
+        dimensions,
+        data,
+        date,
+        colorize
     } = props;
 
     // Create Map Paths
@@ -44,7 +48,7 @@ const Map = props => {
                 countryPaths.map((path, i) => {
                     return (
                         <Path 
-                            key={COUNTRIES[i].properties.name}
+                            key={COUNTRIES[i].properties.country}
                             d={path}
                             stroke={COLORS.borders}
                             strokeWidth={0.6}

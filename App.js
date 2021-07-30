@@ -24,7 +24,8 @@ import * as d3 from "d3";
 export default function App() {
   const dimensions = Dimensions.get("window");
 
-  const [stat, setStat] = useState("confirmed");
+  const [stat, setStat] = useState("confirmed_cum");
+  const  [date, setDate] = useState("2021-01-29");
 
   //Data Manipulation
   const covidData = useMemo(() => {
@@ -50,9 +51,9 @@ export default function App() {
   }, []); 
   
   const maxY = useMemo(() => {
-    return d3.max(covidData, (countryArray) =>
+    return d3.max(covidData, (country) =>
     d3.max(country.data, (d) => d["avg_" + stat])
-    )
+    );
   }, [stat])
 
   const colorize = useMemo(() => {
@@ -66,6 +67,9 @@ export default function App() {
     <View style={styles.container}>
         <Map
           dimensions={dimensions} 
+          data={covidData}
+          date={date}
+          colorize={colorize}
         />       
     </View>
   );
