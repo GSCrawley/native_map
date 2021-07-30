@@ -165,7 +165,10 @@ const Map = props => {
                     onGestureEvent={(e) => panGestureHandler(e)}
                     onHandlerStateChange={(e) => panStateHandler(e)}
                     >
-
+                        <PinchGestureHandler
+                            onGestureEvent={(e) => pinchGestureHandler(e)}
+                            onHandlerStateChange={(e) => pinchStateHandler(e)}
+                            >
                     <Svg
                     width={dimensions.width}
                     height={dimensions.height /2} 
@@ -183,11 +186,18 @@ const Map = props => {
                             {countryList.map(x => x)}
                         </G>
                     </Svg>
+                    </PinchGestureHandler>
                 </PanGestureHandler>
-                
+                <Button
+                    buttonStyle={{
+                        opacity: buttonOpacity
+                    }}
+                    onPress={initializeMap}
+                    text={<>&#x21bb;</>}
+                    />
             </View>
     );
-    }
+ }
 
 // const styles = StyleSheet.create({
 //     svg: {
