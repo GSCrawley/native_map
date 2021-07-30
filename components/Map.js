@@ -4,6 +4,11 @@ import { StyleSheet, View } from 'react-native';
 // LIBRARIES
 import Svg, { G, Path, Circle } from 'react-native-svg';
 import * as d3 from "d3";
+import {
+    PanGestureHandler, 
+    PinchGestureHandler,
+    State
+} from 'react-native-gesture-handler'
 
 //CONSTANTS
 import { COUNTRIES } from "../constants/countryShapes";
@@ -12,6 +17,9 @@ import COLORS from "../constants/Colors";
 const Map = props => {
     
     const [countryList, setCountryList] = useState([]);
+    const [translateX, setTranslateX] = useState([0]);
+    const [translateY, setTranslateY] = useState([0]);
+
 
     const {
         dimensions,
@@ -20,6 +28,14 @@ const Map = props => {
         colorize,
         stat
     } = props;
+
+
+    //Gesture Handlers
+    const PanGestureHandler = event => {
+        setTranslateX(event.nativeEvent.translationX);
+        setTranslateY(event.nativeEvent.translationY);
+
+    };
 
     // Create Map Paths
     // useMemo hook creates a constant that will only change with changing dependencies. in this case I am making sure the dimensions of the map will always fill half the screen. it will matter once the
@@ -70,7 +86,7 @@ const Map = props => {
                             d={path}
                             stroke={COLORS.greyLight}
                             strokeWidth={0.6}
-                            strokeOpacity={0.3}
+                            strokeOpacity={0.5}
                             fill={
                                 isDataAvailable 
                                     ? colorize(curCountryData[dateIndex][stat]) 
@@ -85,12 +101,17 @@ const Map = props => {
         
         return (
             <View>
-                <Svg
+                <PanGestureHandler
+                    onGestureEvent={(e) => panGestureHandler(e)}
+                    >
+                    <Svg
                     width={dimensions.width}
                     height={dimensions.height /2} 
                     // style={styles.svg}
                     >
-                        <G>
+                        <G
+                            transform={`translate(${translateX},${translateY})`}
+                            >
                             <Circle
                                 cx={dimensions.width /2}
                                 cy={mapExtent /2}
@@ -100,6 +121,8 @@ const Map = props => {
                             {countryList.map(x => x)}
                         </G>
                     </Svg>
+                </PanGestureHandler>
+                
             </View>
     );
     }

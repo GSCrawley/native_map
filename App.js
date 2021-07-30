@@ -25,7 +25,7 @@ export default function App() {
   const dimensions = Dimensions.get("window");
 
   const [stat, setStat] = useState("avg_confirmed");
-  const  [date, setDate] = useState("2020-10-15");
+  const  [date, setDate] = useState("2021-04-15");
 
   //Data Manipulation
   const covidData = useMemo(() => {
@@ -57,7 +57,7 @@ export default function App() {
   }, [stat])
 
   const colorize = useMemo(() => {
-    const colorScale = d3.scaleSequentialSymlog(d3.interpolateReds) //Symlog allows for '0' 
+    const colorScale = d3.scaleSequentialSymlog(d3.interpolateOranges) //Symlog allows for '0' 
     .domain([0,maxY]);
     return colorScale
   })   
