@@ -8,7 +8,7 @@
 ## the app was built using Expo, React Native, react-native-gesture-handler, and D3. 
 
 ### covid data from covid19.who.it
-### special thanks to Jo Berkner of @GeoLic for sharing his passion for data visualization, and explaining this process in such painstaking detail. I'm really glad JavaScript is the same in English and German!
+### special thanks to Jo Berkner of @GeoLic for sharing his passion for data visualization, and explaining this process in such painstaking detail. 
 
 #### commit #b6b01b4 is the fully rendered map, pre-data and pre-gesture.
 
