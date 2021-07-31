@@ -78,8 +78,7 @@ const Map = props => {
         if (event.nativeEvent.scale + lastScaleOffset >= 1 && 
             event.nativeEvent.scale + lastScaleOffset <= 5) {
             setPrevScale(scale);
-            setScale(event.nativeEvent.scale 
-            + lastScaleOffset);
+            setScale(event.nativeEvent.scale + lastScaleOffset);
             setTranslateX(
                 translateX - (
                     event.nativeEvent.focalX / scale -
