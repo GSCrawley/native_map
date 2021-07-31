@@ -200,9 +200,8 @@ const Map = props => {
                 </PanGestureHandler>
 
                 <Button
-                    buttonStyle={{
-                        opacity: buttonOpacity
-                    }}
+                    buttonStyle={{ opacity: buttonOpacity }}
+                    fill={COLORS.lightPrimary} 
                     onPress={initializeMap}
                     text={<>&#x21bb;</>} //React code for reload button
                 />

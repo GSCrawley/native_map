@@ -1,10 +1,10 @@
 import React from 'react';
-import {View, Text, StyleSheet, TouchableOpacity, Animated} from "react-native";
+import { Text, StyleSheet, TouchableOpacity, Animated} from "react-native";
 import COLORS from "../constants/Colors";
 
 const Button = props => {
     return (
-        <Animated.View style={props.buttonStyle}>
+        <Animated.View style={ props.buttonStyle}>
             <TouchableOpacity onPress={props.onPress}>
                 <Text style ={styles.text}>{props.text}</Text>
             </TouchableOpacity>

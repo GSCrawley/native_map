@@ -5,30 +5,24 @@
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web",
-    "eject": "expo eject",
-    "postinstall": "patch-package"
+    "eject": "expo eject"
   },
   "dependencies": {
-    "d3": "^7.0.0",
-    "d3-array": "^3.0.1",
-    "expo": "^42.0.3",
-    "expo-cli": "^4.9.1",
-    "expo-status-bar": "~1.0.4",
-    "jest-react-native": "^18.0.0",
-    "metro": "^0.66.2",
-    "metro-react-native-babel-preset": "^0.66.2",
-    "node": "^16.6.0",
-    "patch-package": "^6.4.7",
-    "react": "^17.0.2",
-    "react-dom": "16.13.1",
-    "react-native": "0.64",
-    "react-native-gesture-handler": "^1.10.3",
-    "react-native-svg": "^12.1.1",
-    "react-native-web": "^0.17.1",
+    "d3": "^5.16.0",
+    "d3-scale": "^3.2.1",
+    "d3-scale-chromatic": "^1.5.0",
+    "expo": "39.0.0",
+    "react": "~16.9.0",
+    "react-dom": "~16.9.0",
+    "react-native": "https://github.com/expo/react-native/archive/sdk-37.0.1.tar.gz",
+    "react-native-gesture-handler": "~1.7.0",
+    "react-native-svg": "12.1.0",
+    "react-native-web": "~0.11.7",
     "topojson-client": "^3.1.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.9.0"
+    "@babel/core": "^7.8.6",
+    "babel-preset-expo": "^8.2.1"
   },
   "private": true
 }
