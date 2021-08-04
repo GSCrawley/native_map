@@ -17,7 +17,7 @@
 ### special thanks to @GeoLic for sharing his passion for data visualization, and explaining this process in such painstaking detail. I'm really glad JavaScript is the same in English and German!
 
 
-![2020-01-20](assets/2020-01-20.png =150x)
+![2020-01-20](assets/2020-01-20.png =100x20)
 
 
 
