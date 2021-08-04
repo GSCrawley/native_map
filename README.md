@@ -14,16 +14,10 @@
 ## For now I will have to manually update the data but the plan is to add an API from the WHO for daily so that it updates automatically every day. I will also create an interactive key so that users can toggle between different data topics. 
 
 ### covid data comes from covid19.who.it
-<<<<<<< HEAD
+
 ### special thanks to J.Berkner of @GeoLic for sharing his passion for data visualization, and explaining this process in such painstaking detail. I'm really glad JavaScript is the same in English and German!
-=======
-### special thanks to @GeoLic for sharing his passion for data visualization, and explaining this process in such painstaking detail. I'm really glad JavaScript is the same in English and German!
-=======
 
-### covid data from covid19.who.it
-### special thanks to Jo Berkner of @GeoLic for sharing his passion for data visualization, and explaining this process in such painstaking detail. 
->>>>>>> 29aeedd49c0394aba71910abc5d8e16b39fe695c
-
+![2020-01-20](/assets/2020-01-20.png)
 
 
 
