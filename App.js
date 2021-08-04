@@ -25,7 +25,7 @@ export default function App() {
   const dimensions = Dimensions.get("window");
 
   const [stat, setStat] = useState("avg_confirmed");
-  const  [date, setDate] = useState("2021-07-18");
+  const  [date, setDate] = useState("2020-12-20");
 
   //Data Manipulation
   const covidData = useMemo(() => {
